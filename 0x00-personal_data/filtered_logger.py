@@ -36,7 +36,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     username = getenv("PERSONAL_DATA_DB_USERNAME", "root")
     password = getenv("PERSONAL_DATA_DB_PASSWORD", "")
     host = getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = getenv("PERSONAL_DATA_DB_NAME")
+    db_name = getenv("PERSONAL_DATA_DB_NAME", "holberton")
 
     if not db_name:
         raise ValueError("PERSONAL_DATA_DB_NAME envar not provided.")
