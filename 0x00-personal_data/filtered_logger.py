@@ -6,6 +6,7 @@ from typing import List
 import re
 import logging
 from os import getenv
+import sys
 import mysql.connector
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -36,7 +37,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     username = getenv("PERSONAL_DATA_DB_USERNAME", "root")
     password = getenv("PERSONAL_DATA_DB_PASSWORD", "")
     host = getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = getenv("PERSONAL_DATA_DB_NAME", "holberton")
+    db_name = getenv("PERSONAL_DATA_DB_NAME")
 
     if not db_name:
         raise ValueError("PERSONAL_DATA_DB_NAME envar not provided.")
@@ -90,3 +91,4 @@ class RedactingFormatter(logging.Formatter):
 
 if __name__ == '__main__':
     main()
+    sys.exit(0)
