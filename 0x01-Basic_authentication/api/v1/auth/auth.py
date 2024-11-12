@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Used to handle authetication"""
-from typing import List
+from typing import List, TypeVar
 from flask import request
 
 
 class Auth:
     """Auth class to handle authentication"""
-    def require_auth(self, path: str, excluded_paths: List) -> bool:
+    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Require authentication"""
         if path is None:
             return True
@@ -24,8 +24,11 @@ class Auth:
             return None
         if 'Authorization' not in request.headers:
             return None
-        return request.headers['Authorization']
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> type:
-        """Current user"""
+        """Handle current User
+           Returns:
+                TypeVar: User
+        """
         return None
