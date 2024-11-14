@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+"""init storage"""
+from engine.file_storage import FileStorage
+
+
+storage = FileStorage()
