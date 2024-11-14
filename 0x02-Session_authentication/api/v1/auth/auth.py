@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Used to handle authetication"""
+from os import getenv
 from typing import List, TypeVar
 from flask import request
 
@@ -49,3 +50,19 @@ class Auth:
                 TypeVar: User
         """
         return None
+
+    def session_cookie(self, request=None):
+        """returns a cookie value from a request
+
+        Args:
+            request (request_object, optional): request. Defaults to None.
+        """
+        if request is None:
+            return None
+
+        session_name = getenv('SESSION_NAME')
+
+        if session_name is None:
+            return None
+
+        return request.cookies.get(session_name)
