@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """User session module"""
-from base import Base
+from models.base import Base
 
 
 class UserSession(Base):
