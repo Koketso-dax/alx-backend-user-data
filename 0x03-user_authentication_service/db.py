@@ -2,7 +2,7 @@
 """DB module
 """
 import logging
-from typing import Dict
+from typing import Any, Dict
 from sqlalchemy import create_engine, tuple_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -53,7 +53,7 @@ class DB:
             raise
         return new_user
 
-    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
+    def find_user_by(self, **kwargs: Any) -> User:
         """Searches for a user in the database
            based on the provided keyword arguments.
            Args:
