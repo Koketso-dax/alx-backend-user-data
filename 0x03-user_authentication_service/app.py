@@ -8,6 +8,7 @@ from flask import url_for
 
 AUTH = Auth()
 app = Flask(__name__)
+logging.disable(logging.WARNING)
 
 
 @app.route("/", methods=["GET"], strict_slashes=False)
