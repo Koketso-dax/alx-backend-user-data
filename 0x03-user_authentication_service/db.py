@@ -61,9 +61,8 @@ class DB:
            Return:
                User object if found, otherwise None
         """
-        session = self._session
         try:
-            user = session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
             raise NoResultFound()
         except InvalidRequestError:
