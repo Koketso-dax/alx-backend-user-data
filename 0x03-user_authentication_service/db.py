@@ -2,6 +2,7 @@
 """DB module
 """
 import logging
+from typing import Dict
 from sqlalchemy import create_engine, tuple_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -52,7 +53,7 @@ class DB:
             raise
         return new_user
 
-    def find_user_by(self, **kwargs) -> User:
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
         """Searches for a user in the database
            based on the provided keyword arguments.
            Args:
@@ -64,5 +65,38 @@ class DB:
         try:
             user = session.query(User).filter_by(**kwargs).one()
         except NoResultFound:
-            return None
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Updates a user's attributes by user ID
+           and arbitrary keyword arguments.
+
+        Args:
+            user_id (int): The ID of the user to update.
+            **kwargs: Keyword arguments representing
+                      the user's attributes to update.
+
+        Raises:
+            ValueError: If an invalid attribute is
+            passed in kwargs or if the user is not found.
+
+        Returns:
+            None
+        """
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError(f"User with id {user_id} not found")
+
+        for key, value in kwargs.items():
+            if not hasattr(user, key):
+                raise ValueError(f"User has no attribute {key}")
+            setattr(user, key, value)
+
+        try:
+            self._session.commit()
+        except InvalidRequestError:
+            raise ValueError("Invalid request")
