@@ -3,7 +3,7 @@
 """
 import logging
 from typing import Dict
-from sqlalchemy import create_engine, tuple_
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
@@ -70,7 +70,7 @@ class DB:
             raise InvalidRequestError()
         return user
 
-    def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
         """Updates a user's attributes by user ID
            and arbitrary keyword arguments.
 
