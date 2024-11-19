@@ -61,18 +61,16 @@ class DB:
            Return:
                User object if found, otherwise None
         """
-        attrs, vals = [], []
-        for attr, val in kwargs.items():
-            if not hasattr(User, attr):
-                raise InvalidRequestError()
-            attrs.append(getattr(User, attr))
-            vals.append(val)
-
-        user = self._session.query(User).filter(
-            tuple_(*attrs).in_([tuple(vals)])).first()
-        if not user:
-            raise NoResultFound()
-        return user
+        try:
+            query = self._session.query(User)
+            for attr, val in kwargs.items():
+                query = query.filter(getattr(User, attr) == val)
+            user = query.first()
+            if not user:
+                raise NoResultFound()
+            return user
+        except AttributeError:
+            raise InvalidRequestError("Invalid query arguments passed")
 
     def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
         """Updates a user's attributes by user ID
