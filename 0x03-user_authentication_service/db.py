@@ -3,7 +3,7 @@
 """
 import logging
 from typing import Dict
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, tuple_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
@@ -61,12 +61,17 @@ class DB:
            Return:
                User object if found, otherwise None
         """
-        try:
-            user = self._session.query(User).filter_by(**kwargs).first()
-        except NoResultFound:
+        attrs, vals = [], []
+        for attr, val in kwargs.items():
+            if not hasattr(User, attr):
+                raise InvalidRequestError()
+            attrs.append(getattr(User, attr))
+            vals.append(val)
+
+        user = self._session.query(User).filter(
+            tuple_(*attrs).in_([tuple(vals)])).first()
+        if not user:
             raise NoResultFound()
-        except InvalidRequestError:
-            raise InvalidRequestError()
         return user
 
     def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
