@@ -72,7 +72,7 @@ class DB:
         except AttributeError:
             raise InvalidRequestError("Invalid query arguments passed")
 
-    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a user's attributes by user ID
            and arbitrary keyword arguments.
 
