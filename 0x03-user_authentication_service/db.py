@@ -53,7 +53,7 @@ class DB:
             raise
         return new_user
 
-    def find_user_by(self, **kwargs: Any) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Searches for a user in the database
            based on the provided keyword arguments.
            Args:
