@@ -75,16 +75,13 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a user's attributes by user ID
            and arbitrary keyword arguments.
-
         Args:
             user_id (int): The ID of the user to update.
             **kwargs: Keyword arguments representing
                       the user's attributes to update.
-
         Raises:
             ValueError: If an invalid attribute is
             passed in kwargs or if the user is not found.
-
         Returns:
             None
         """
