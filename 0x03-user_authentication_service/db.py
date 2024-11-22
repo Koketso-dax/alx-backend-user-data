@@ -2,7 +2,7 @@
 """DB module
 """
 import logging
-from typing import Any, Dict
+from typing import Dict
 from sqlalchemy import create_engine, tuple_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
